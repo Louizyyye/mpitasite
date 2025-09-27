@@ -1,119 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Appointment - Mpita Medical</title>
-
-  <!-- Tailwind CSS -->
+  <meta name="description" content="Book a medical appointment with a specialist at Mpita Medical.">
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- jsPDF for PDF generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-50">
+  <!-- HEADER -->
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-blue-700">Mpita Medical</a>
+      <a href="index.html#loginSection" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Login to Book
+      </a>
+    </div>
+  </header>
 
-  <div class="bg-white shadow-xl rounded-xl p-8 max-w-lg w-full">
-    <h1 class="text-2xl font-bold mb-6 text-center text-blue-700">
-      Book an Appointment
-    </h1>
+  <!-- MAIN -->
+  <main class="max-w-lg mx-auto p-6 mt-10 bg-white rounded-lg shadow">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Appointment Booking</h1>
 
     <form id="appointmentForm" class="space-y-4">
-      <!-- Name -->
+      <!-- Patient Name -->
       <div>
-        <label class="block font-medium text-gray-700">Full Name</label>
-        <input type="text" name="name" required
-          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
-      </div>
-
-      <!-- Email -->
-      <div>
-        <label class="block font-medium text-gray-700">Email</label>
-        <input type="email" name="email" required
-          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
-      </div>
-
-      <!-- Phone -->
-      <div>
-        <label class="block font-medium text-gray-700">Phone</label>
-        <input type="tel" name="phone" required
-          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
+        <label class="block text-gray-700 mb-1">Full Name</label>
+        <input type="text" name="name" placeholder="John Doe"
+          class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
       </div>
 
       <!-- Appointment Type -->
       <div>
-        <label class="block font-medium text-gray-700">Appointment Type</label>
-        <select name="type" required
-          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400">
-          <option value="">-- Select Service --</option>
+        <label class="block text-gray-700 mb-1">Appointment Type</label>
+        <select name="type"
+          class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
+          <option value="">Select Service</option>
           <option>General Consultation</option>
           <option>Laboratory Services</option>
-          <option>Ultrasound Services</option>
-          <option>Pharmacy Pickup</option>
-          <option>Vaccination</option>
-          <option>Specialist Referral</option>
+          <option>Ultrasound - Obstetrics</option>
+          <option>Ultrasound - MSK</option>
+          <option>Ultrasound - Pelvic</option>
+          <option>Ultrasound - Abdominal</option>
+          <option>Ultrasound - Diagnostic</option>
         </select>
       </div>
 
-      <!-- Date -->
+      <!-- Specialist Dropdown -->
       <div>
-        <label class="block font-medium text-gray-700">Preferred Date</label>
-        <input type="date" name="date" required
-          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
+        <label class="block text-gray-700 mb-1">Choose Specialist</label>
+        <select id="specialistSelect" name="specialist"
+          class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
+          <option value="">Select a Specialist</option>
+        </select>
       </div>
 
-      <!-- Message -->
+      <!-- Auto-filled Details -->
       <div>
-        <label class="block font-medium text-gray-700">Additional Notes</label>
-        <textarea name="message" rows="4"
-          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"
-          placeholder="Reason for visit, special requests, etc."></textarea>
+        <label class="block text-gray-700 mb-1">Specialist Phone</label>
+        <input type="text" id="specialistPhone" name="specialist_phone"
+          class="w-full border border-gray-300 rounded px-4 py-2 bg-gray-100" readonly required>
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Specialist Occupation</label>
+        <input type="text" id="specialistOccupation" name="specialist_occupation"
+          class="w-full border border-gray-300 rounded px-4 py-2 bg-gray-100" readonly required>
       </div>
 
-      <button type="submit"
-        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-        Submit & Download PDF
+      <!-- Date & Time -->
+      <div>
+        <label class="block text-gray-700 mb-1">Preferred Date</label>
+        <input type="date" name="date"
+          class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Preferred Time</label>
+        <input type="time" name="time"
+          class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
+      </div>
+
+      <!-- PDF Button -->
+      <button type="button" id="downloadPDF"
+        class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+        Download Appointment as PDF
       </button>
     </form>
+  </main>
 
-    <p id="successMsg" class="hidden mt-4 text-green-600 font-semibold text-center">
-      Appointment saved! Your PDF is downloading...
-    </p>
-  </div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const { jsPDF } = window.jspdf;
 
-    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    // Sample specialist list (replace with your own data)
+    const specialists = [
+      { name: "Dr. Jane Smith", phone: "+254 700 111 111", occupation: "Radiologist" },
+      { name: "Dr. Mark Otieno", phone: "+254 700 222 222", occupation: "Obstetrician" },
+      { name: "Dr. Aisha Khan", phone: "+254 700 333 333", occupation: "Lab Technologist" },
+      { name: "Dr. Peter Wangari", phone: "+254 700 444 444", occupation: "General Practitioner" },
+      { name: "Dr. Felix Mwangi", phone: "+254 700 555 555", occupation: "Ultrasound Specialist" }
+    ];
 
-      const form = new FormData(this);
-      const name = form.get('name');
-      const email = form.get('email');
-      const phone = form.get('phone');
-      const type = form.get('type');
-      const date = form.get('date');
-      const message = form.get('message');
+    // Populate dropdown
+    const specialistSelect = document.getElementById("specialistSelect");
+    specialists.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.name;
+      opt.textContent = s.name;
+      specialistSelect.appendChild(opt);
+    });
 
-      // Generate PDF
-      const doc = new jsPDF();
-      doc.setFontSize(18);
-      doc.text("Mpita Medical - Appointment Details", 14, 20);
-      doc.setFontSize(12);
-      doc.text(`Name: ${name}`, 14, 40);
-      doc.text(`Email: ${email}`, 14, 50);
-      doc.text(`Phone: ${phone}`, 14, 60);
-      doc.text(`Appointment Type: ${type}`, 14, 70);
-      doc.text(`Preferred Date: ${date}`, 14, 80);
-      doc.text("Notes:", 14, 90);
-      doc.text(message || "N/A", 14, 100, { maxWidth: 180 });
+    // Auto-fill details when specialist is chosen
+    specialistSelect.addEventListener("change", e => {
+      const selected = specialists.find(s => s.name === e.target.value);
+      document.getElementById("specialistPhone").value = selected ? selected.phone : "";
+      document.getElementById("specialistOccupation").value = selected ? selected.occupation : "";
+    });
 
-      doc.save(`Appointment_${name.replace(/\s+/g, "_")}.pdf`);
-
-      // Show confirmation
-      document.getElementById('successMsg').classList.remove('hidden');
-      this.reset();
+    // Download PDF
+    document.getElementById('downloadPDF').addEventListener('click', () => {
+      const form = document.getElementById('appointmentForm');
+      const data = new FormData(form);
+      const pdf = new jsPDF();
+      let y = 20;
+      pdf.setFontSize(14);
+      pdf.text('Mpita Medical Appointment Details', 20, y); y+=10;
+      data.forEach((value, key) => {
+        pdf.text(`${key.replace('_',' ')}: ${value}`, 20, y);
+        y += 10;
+      });
+      pdf.save('appointment.pdf');
     });
   </script>
 </body>
 </html>
+
