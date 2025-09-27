@@ -1,0 +1,11 @@
+{
+  "name": "Basic Node.js",
+  "build": { "dockerfile": "Dockerfile" },
+  "remoteUser": "node",
+  "customizations" : {
+    "jetbrains" : {
+      "backend" : "WebStorm"
+    }
+  }
+
+}
