@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Appointment - Mpita Medical</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white shadow-xl rounded-xl p-8 max-w-lg w-full">
+    <h1 class="text-2xl font-bold mb-6 text-center text-blue-700">
+      Book an Appointment
+    </h1>
+
+    <form id="appointmentForm" class="space-y-4">
+      <!-- Name -->
+      <div>
+        <label class="block font-medium text-gray-700">Full Name</label>
+        <input type="text" name="name" required
+          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block font-medium text-gray-700">Email</label>
+        <input type="email" name="email" required
+          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="block font-medium text-gray-700">Phone</label>
+        <input type="tel" name="phone" required
+          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <!-- Appointment Type -->
+      <div>
+        <label class="block font-medium text-gray-700">Appointment Type</label>
+        <select name="type" required
+          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400">
+          <option value="">-- Select Service --</option>
+          <option>General Consultation</option>
+          <option>Laboratory Services</option>
+          <option>Ultrasound Services</option>
+          <option>Pharmacy Pickup</option>
+          <option>Vaccination</option>
+          <option>Specialist Referral</option>
+        </select>
+      </div>
+
+      <!-- Date -->
+      <div>
+        <label class="block font-medium text-gray-700">Preferred Date</label>
+        <input type="date" name="date" required
+          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <!-- Message -->
+      <div>
+        <label class="block font-medium text-gray-700">Additional Notes</label>
+        <textarea name="message" rows="4"
+          class="mt-1 w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-400"
+          placeholder="Reason for visit, special requests, etc."></textarea>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+        Submit & Download PDF
+      </button>
+    </form>
+
+    <p id="successMsg" class="hidden mt-4 text-green-600 font-semibold text-center">
+      Appointment saved! Your PDF is downloading...
+    </p>
+  </div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const form = new FormData(this);
+      const name = form.get('name');
+      const email = form.get('email');
+      const phone = form.get('phone');
+      const type = form.get('type');
+      const date = form.get('date');
+      const message = form.get('message');
+
+      // Generate PDF
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text("Mpita Medical - Appointment Details", 14, 20);
+      doc.setFontSize(12);
+      doc.text(`Name: ${name}`, 14, 40);
+      doc.text(`Email: ${email}`, 14, 50);
+      doc.text(`Phone: ${phone}`, 14, 60);
+      doc.text(`Appointment Type: ${type}`, 14, 70);
+      doc.text(`Preferred Date: ${date}`, 14, 80);
+      doc.text("Notes:", 14, 90);
+      doc.text(message || "N/A", 14, 100, { maxWidth: 180 });
+
+      doc.save(`Appointment_${name.replace(/\s+/g, "_")}.pdf`);
+
+      // Show confirmation
+      document.getElementById('successMsg').classList.remove('hidden');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
