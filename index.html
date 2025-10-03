@@ -28,25 +28,37 @@
 <!-- ======================= HEADER / NAVIGATION ======================= -->
 <header class="bg-white shadow">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
+    <div class="flex justify-between h-16 items-center">
       <!-- Logo -->
       <div class="flex-shrink-0 flex items-center">
         <a href="index.html" class="text-2xl font-bold text-blue-700">Mpita Medical</a>
       </div>
 
-      <!-- Nav Links -->
+      <!-- Desktop Nav -->
       <nav class="hidden md:flex space-x-6 items-center">
         <a href="services.html" class="text-gray-700 hover:text-blue-600">Services</a>
         <a href="contact.html" class="text-gray-700 hover:text-blue-600">Contact</a>
-        <!-- Marketplace trigger -->
-        <button onclick="toggleMarketplace()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
-          Marketplace
-        </button>
-        <!-- Login/Register buttons -->
+        <button onclick="toggleMarketplace()" class="text-gray-700 hover:text-blue-600">Marketplace</button>
         <a href="#loginSection" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Login</a>
         <a href="#registerSection" class="border border-blue-600 text-blue-600 px-4 py-2 rounded hover:bg-blue-50 transition">Register</a>
       </nav>
+
+      <!-- Mobile Hamburger -->
+      <div class="md:hidden">
+        <button onclick="toggleMobileMenu()" class="text-gray-700 focus:outline-none">
+          ☰
+        </button>
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile Nav Menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-6 py-4 space-y-4">
+    <a href="services.html" class="block text-gray-700 hover:text-blue-600">Services</a>
+    <a href="contact.html" class="block text-gray-700 hover:text-blue-600">Contact</a>
+    <button onclick="toggleMarketplace()" class="block text-gray-700 hover:text-blue-600">Marketplace</button>
+    <a href="#loginSection" class="block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Login</a>
+    <a href="#registerSection" class="block border border-blue-600 text-blue-600 px-4 py-2 rounded hover:bg-blue-50 transition">Register</a>
   </div>
 </header>
 
@@ -163,6 +175,12 @@ function toggleMarketplace(){
     sidebar.classList.remove('translate-x-full');
     overlay.classList.remove('hidden');
   }
+}
+</script>
+<script>
+function toggleMobileMenu(){
+  const menu=document.getElementById('mobileMenu');
+  menu.classList.toggle('hidden');
 }
 </script>
 </body>
