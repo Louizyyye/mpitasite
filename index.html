@@ -89,12 +89,17 @@
     </div>
   </div>
 </section>
-
-<!-- ======================= LOGIN SECTION ======================= -->
-<section id="loginSection" class="py-16 bg-gray-100">
+<!-- ======================= PATIENT LOGIN & REGISTER ======================= -->
+<section id="authSection" class="py-16 bg-gray-100">
   <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Patient Login</h2>
-    <form class="space-y-4">
+    <!-- Tabs -->
+    <div class="flex justify-around mb-6">
+      <button id="loginTab" onclick="showAuthTab('login')" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-2">Login</button>
+      <button id="registerTab" onclick="showAuthTab('register')" class="text-gray-500 hover:text-blue-600 pb-2">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-4">
       <div>
         <label class="block text-gray-700 mb-1">Email</label>
         <input type="email" placeholder="you@example.com" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
@@ -105,14 +110,9 @@
       </div>
       <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Login</button>
     </form>
-  </div>
-</section>
 
-<!-- ======================= REGISTRATION SECTION ======================= -->
-<section id="registerSection" class="py-16">
-  <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create an Account</h2>
-    <form class="space-y-4">
+    <!-- Register Form (Hidden by default) -->
+    <form id="registerForm" class="space-y-4 hidden">
       <div>
         <label class="block text-gray-700 mb-1">Full Name</label>
         <input type="text" placeholder="Your Name" class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
@@ -129,6 +129,60 @@
     </form>
   </div>
 </section>
+
+<!-- ======================= DOCTOR PORTFOLIO ======================= -->
+<section id="doctorPortfolio" class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Meet Our Medical Practitioners</h2>
+
+    <!-- WhatsApp Status Grid -->
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 justify-items-center">
+      <!-- Doctor Card -->
+      <div onclick="openDoctorModal('Dr. Achieng','Cardiologist','Experienced in heart surgeries and consultations.','https://via.placeholder.com/300')"
+           class="flex flex-col items-center cursor-pointer hover:scale-105 transition">
+        <div class="w-20 h-20 rounded-full border-4 border-green-500 overflow-hidden">
+          <img src="https://via.placeholder.com/150" alt="Doctor A" class="w-full h-full object-cover">
+        </div>
+        <p class="mt-2 text-sm text-gray-700 font-medium">Dr. Achieng</p>
+      </div>
+
+      <!-- Doctor B -->
+      <div onclick="openDoctorModal('Dr. Kamau','Neurologist','Specialist in brain & nerve health.','https://via.placeholder.com/300')"
+           class="flex flex-col items-center cursor-pointer hover:scale-105 transition">
+        <div class="w-20 h-20 rounded-full border-4 border-green-500 overflow-hidden">
+          <img src="https://via.placeholder.com/150" alt="Doctor B" class="w-full h-full object-cover">
+        </div>
+        <p class="mt-2 text-sm text-gray-700 font-medium">Dr. Kamau</p>
+      </div>
+
+      <!-- Doctor C -->
+      <div onclick="openDoctorModal('Dr. Patel','Dermatologist','Expert in skin treatment & cosmetic care.','https://via.placeholder.com/300')"
+           class="flex flex-col items-center cursor-pointer hover:scale-105 transition">
+        <div class="w-20 h-20 rounded-full border-4 border-green-500 overflow-hidden">
+          <img src="https://via.placeholder.com/150" alt="Doctor C" class="w-full h-full object-cover">
+        </div>
+        <p class="mt-2 text-sm text-gray-700 font-medium">Dr. Patel</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Doctor Modal -->
+<div id="doctorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg max-w-md w-full relative">
+    <button onclick="closeDoctorModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-500">&times;</button>
+
+    <img id="doctorImage" src="" alt="Doctor" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-500">
+
+    <h3 id="doctorName" class="text-xl font-bold text-center text-gray-800"></h3>
+    <p id="doctorSpecialty" class="text-center text-blue-600 font-medium"></p>
+    <p id="doctorBio" class="mt-3 text-gray-600 text-sm text-center"></p>
+
+    <div class="mt-4 flex justify-center">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Book Appointment</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- ======================= CTA ======================= -->
 <section class="bg-gray-100 py-16 text-center">
@@ -181,6 +235,42 @@ function toggleMarketplace(){
 function toggleMobileMenu(){
   const menu=document.getElementById('mobileMenu');
   menu.classList.toggle('hidden');
+}
+</script>
+<script>
+function showAuthTab(tab){
+  const loginForm=document.getElementById('loginForm');
+  const registerForm=document.getElementById('registerForm');
+  const loginTab=document.getElementById('loginTab');
+  const registerTab=document.getElementById('registerTab');
+
+  if(tab==='login'){
+    loginForm.classList.remove('hidden');
+    registerForm.classList.add('hidden');
+    loginTab.classList.add('text-blue-600','font-bold','border-b-2','border-blue-600');
+    registerTab.classList.remove('text-blue-600','font-bold','border-b-2','border-blue-600');
+  }else{
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+    registerTab.classList.add('text-blue-600','font-bold','border-b-2','border-blue-600');
+    loginTab.classList.remove('text-blue-600','font-bold','border-b-2','border-blue-600');
+  }
+}
+</script>
+<script>
+function openDoctorModal(name, specialty, bio, image){
+  document.getElementById("doctorName").innerText = name;
+  document.getElementById("doctorSpecialty").innerText = specialty;
+  document.getElementById("doctorBio").innerText = bio;
+  document.getElementById("doctorImage").src = image;
+
+  document.getElementById("doctorModal").classList.remove("hidden");
+  document.getElementById("doctorModal").classList.add("flex");
+}
+
+function closeDoctorModal(){
+  document.getElementById("doctorModal").classList.remove("flex");
+  document.getElementById("doctorModal").classList.add("hidden");
 }
 </script>
 </body>
