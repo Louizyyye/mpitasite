@@ -6,6 +6,9 @@ SECRET_KEY = 'django-insecure-n5va)o+3&%+adlawhqubs&nspu^3z^0f7m_%&p%c9&4syivl9v
 DEBUG = True
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "core.User"
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
