@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: mpita-medical
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mpitasite.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: mpitasite.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "mpita-medical.onrender.com"
+    plan: free
